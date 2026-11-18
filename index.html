@@ -138,40 +138,44 @@
                     <p>Here are a few of my recent projects, spanning various mediums. Some include case studies for a deeper look into the details and development process.</p>        
                 </div>
 
-                <div id="wide-project-1" class="hidden">
+                <article id="wide-project-1" class="project-showcase" data-project-showcase data-project-id="corner-pocket" data-reveal>
+                    <div class="project-globe" aria-hidden="true">
+                        <div class="project-globe-layer project-globe-layer--current"></div>
+                    </div>
                     <div class="two-columns">
                         <div class="p-column left-column">
-                            <img src="images/corner-pocket/CP - logo.svg" id="wide-cp_logo-svg"/>
+                            <img src="images/corner-pocket/CP - logo.svg" id="wide-cp_logo-svg" data-project-logo alt="Corner Pocket"/>
                             <div class="styled-div-project" id="wide-cp-description">
-                                <p>An Android app for pool enthusiasts, designed to track real-life games and generate detailed player statistics. The app offers a seamless experience for recording match data and viewing performance analytics.</p>
+                                <p data-project-description>An Android app for pool enthusiasts, designed to track real-life games and generate detailed player statistics. The app offers a seamless experience for recording match data and viewing performance analytics.</p>
                             </div>
                             <div class="button-container" id="wide-cv-btn-container">
-                                <button class="styled-button"id="wide-cv-btn" onclick="window.open('CP-CS.pdf', '_blank')">VIEW CASE STUDY</button>
+                                <a class="styled-button" id="wide-cv-btn" data-project-case-study href="CP-CS.pdf" target="_blank" rel="noopener noreferrer">VIEW CASE STUDY</a>
                             </div>
                         </div>
                         <div class="p-column right-column">
-                            <div class="logos" id="wide-cp-logos">
+                            <p class="project-gallery-label">SCREENSHOTS</p>
+                            <div class="logos" id="wide-cp-logos" data-project-gallery>
                                 <div class="logos-slide" id="wide-cp-logos-slide">
-                                    <img src="images/corner-pocket/cp-1.png"/>
-                                    <img src="images/corner-pocket/cp-2.png"/>
-                                    <img src="images/corner-pocket/cp-3.png"/>
-                                    <img src="images/corner-pocket/cp-4.png"/>
-                                    <img src="images/corner-pocket/cp-5.png"/>
-                                    <img src="images/corner-pocket/cp-6.png"/>
-                                    <img src="images/corner-pocket/cp-7.png"/>
+                                    <img src="images/corner-pocket/cp-1.png" alt="Corner Pocket match setup screen"/>
+                                    <img src="images/corner-pocket/cp-2.png" alt="Corner Pocket player selection screen"/>
+                                    <img src="images/corner-pocket/cp-3.png" alt="Corner Pocket match tracking screen"/>
+                                    <img src="images/corner-pocket/cp-4.png" alt="Corner Pocket game details screen"/>
+                                    <img src="images/corner-pocket/cp-5.png" alt="Corner Pocket player statistics screen"/>
+                                    <img src="images/corner-pocket/cp-6.png" alt="Corner Pocket performance chart"/>
+                                    <img src="images/corner-pocket/cp-7.png" alt="Corner Pocket match history screen"/>
                                 </div>
-                                <div class="logos-slide" id="wide-cp-logos-slide">
-                                    <img src="images/corner-pocket/cp-1.png"/>
-                                    <img src="images/corner-pocket/cp-2.png"/>
-                                    <img src="images/corner-pocket/cp-3.png"/>
-                                    <img src="images/corner-pocket/cp-4.png"/>
-                                    <img src="images/corner-pocket/cp-5.png"/>
-                                    <img src="images/corner-pocket/cp-6.png"/>
-                                    <img src="images/corner-pocket/cp-7.png"/>
+                                <div class="logos-slide" aria-hidden="true">
+                                    <img src="images/corner-pocket/cp-1.png" alt=""/>
+                                    <img src="images/corner-pocket/cp-2.png" alt=""/>
+                                    <img src="images/corner-pocket/cp-3.png" alt=""/>
+                                    <img src="images/corner-pocket/cp-4.png" alt=""/>
+                                    <img src="images/corner-pocket/cp-5.png" alt=""/>
+                                    <img src="images/corner-pocket/cp-6.png" alt=""/>
+                                    <img src="images/corner-pocket/cp-7.png" alt=""/>
                                 </div>
                             </div>
 
-                            <div class="row-container" id="wide-cp-skills">
+                            <div class="row-container" id="wide-cp-skills" data-project-tags>
                                 <p>ANDROID APP</p>
                                 <p>KOTLIN</p>
                                 <p>REALM DATABASE</p>
@@ -179,80 +183,7 @@
 
                         </div>
                       </div>
-                </div>
-
-                <div id="wide-project-2" class="hidden">
-                    <div class="row-container" id="wide-burtalist-split">
-                        <img src="images/ETDC/Brutalist.svg"/>
-                        <img src="images/ETDC/Brutalist.svg"/>
-                        <img src="images/ETDC/Brutalist.svg"/>
-                    </div>
-
-                    <div class="two-columns" id="ETDC-columns">
-
-                        <div class="etdc-left-column">
-                            <img src="images/ETDC/brutalist weave.svg" id="ETDC-weave" />
-                        </div>
-
-                        <div class="p-column right-column" id="ETDC-r-column">
-                            <img id="wide-ETDC-logo" src="images/ETDC/logo.png"/>
-                            <p id="ETDC-text-wide" class="small_text">A mobile adaptation of a popular board game developed using Unity and C#. This project focuses on translating physical game play mechanics into a digital format while maintaining an engaging user experience.</p>
-                            <button class="ETDC-button" id="wide-etdc-btn" onclick="window.open('ETDC-CS.pdf', '_blank')">VIEW CASE STUDY</button>
-                        </div>
-
-                    </div>
-
-                    <div class="row-container" id="wide-etdc-skills">
-                        <p>MOBILE GAME</p>
-                        <p>UNITY</p>
-                        <p>C#</p>
-                    </div>
-
-                    <div class="logos" id="wide-etdc-logos">
-                        <div class="logos-slide" id="wide-etdc-logos-slide">
-                            <img src="images/ETDC/ETDC-1.png"/>
-                            <img src="images/ETDC/ETDC-2.png"/>
-                            <img src="images/ETDC/ETDC-3.png"/>
-                            <img src="images/ETDC/ETDC-4.png"/>
-                            <img src="images/ETDC/ETDC-5.png"/>
-                            <img src="images/ETDC/ETDC-6.png"/>
-                            <img src="images/ETDC/ETDC-7.png"/>
-                        </div>
-                        <div class="logos-slide" id="wide-etdc-logos-slide">
-                            <img src="images/ETDC/ETDC-1.png"/>
-                            <img src="images/ETDC/ETDC-2.png"/>
-                            <img src="images/ETDC/ETDC-3.png"/>
-                            <img src="images/ETDC/ETDC-4.png"/>
-                            <img src="images/ETDC/ETDC-5.png"/>
-                            <img src="images/ETDC/ETDC-6.png"/>
-                            <img src="images/ETDC/ETDC-7.png"/>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div id="wide-project-3" class="hidden">
-                    <div id="wide-project-3-container">
-    
-                        <img src="images/portfolio/portfolio-logo-wide.svg" id="portfolio-logo-wide"/>
-                  
-                        <div class="row-container" id="portfolio-skills-wide">
-                            <p>FIGMA</p>
-                            <p>HTML</p>
-                            <p>CSS</p>
-                        </div>
-
-                        <img src="images/portfolio/banner-1.png" id="main">
-                        <div id="thumbnails">
-                            <img src="images/portfolio/banner-1.png" alt="pic 1">
-                            <img src="images/portfolio/banner-4.png" alt="pic 2">
-                            <img src="images/portfolio/banner-2.png" alt="pic 3">
-                            <img src="images/portfolio/banner-3.png" alt="pic 4">
-                        </div>
-                        <p id="thumbnail-selection">Click the thumbnails to see alternative designs for this sites hero section*</p>
-    
-                    </div>
-                </div>
+                </article>
 
             </div>
 
@@ -265,108 +196,50 @@
                 <h1 class="sub_title">PROJECTS</h1>
                 <p id="project_overview" class="small_text">Here are a few of my recent projects, spanning various mediums. Some include case studies for a deeper look into the details and development process.</p>
 
-                <img src="images/corner-pocket/CP - logo.svg" id="cp_logo-svg"/>
-                <div id="project-1">
+                <article class="project-showcase" data-project-showcase data-project-id="corner-pocket">
+                    <img src="images/corner-pocket/CP - logo.svg" id="cp_logo-svg" data-project-logo alt="Corner Pocket"/>
+                    <div id="project-1">
+                        <div class="project-globe" aria-hidden="true">
+                            <div class="project-globe-layer project-globe-layer--current"></div>
+                        </div>
 
-                    <div class="row-container">
+                    <div class="row-container" data-project-tags>
                         <p>ANDROID APP</p>
                         <p>KOTLIN</p>
                         <p>REALM DATABASE</p>
                     </div>
     
                     <div class="styled-div-project">
-                        <p>An Android app for pool enthusiasts, designed to track real-life games and generate detailed player statistics. The app offers a seamless experience for recording match data and viewing performance analytics.</p>
+                        <p data-project-description>An Android app for pool enthusiasts, designed to track real-life games and generate detailed player statistics. The app offers a seamless experience for recording match data and viewing performance analytics.</p>
                     </div>
     
                     <div class="button-container">
-                        <button class="styled-button" onclick="window.open('CP-CS.pdf', '_blank')">VIEW CASE STUDY</button>
+                        <a class="styled-button" data-project-case-study href="CP-CS.pdf" target="_blank" rel="noopener noreferrer">VIEW CASE STUDY</a>
                     </div>
     
-                    <div class="logos">
+                    <p class="project-gallery-label">SCREENSHOTS</p>
+                    <div class="logos" data-project-gallery>
                         <div class="logos-slide">
-                            <img src="images/corner-pocket/cp-1.png"/>
-                            <img src="images/corner-pocket/cp-2.png"/>
-                            <img src="images/corner-pocket/cp-3.png"/>
-                            <img src="images/corner-pocket/cp-4.png"/>
-                            <img src="images/corner-pocket/cp-5.png"/>
-                            <img src="images/corner-pocket/cp-6.png"/>
-                            <img src="images/corner-pocket/cp-7.png"/>
+                            <img src="images/corner-pocket/cp-1.png" alt="Corner Pocket match setup screen"/>
+                            <img src="images/corner-pocket/cp-2.png" alt="Corner Pocket player selection screen"/>
+                            <img src="images/corner-pocket/cp-3.png" alt="Corner Pocket match tracking screen"/>
+                            <img src="images/corner-pocket/cp-4.png" alt="Corner Pocket game details screen"/>
+                            <img src="images/corner-pocket/cp-5.png" alt="Corner Pocket player statistics screen"/>
+                            <img src="images/corner-pocket/cp-6.png" alt="Corner Pocket performance chart"/>
+                            <img src="images/corner-pocket/cp-7.png" alt="Corner Pocket match history screen"/>
                         </div>
-                        <div class="logos-slide">
-                            <img src="images/corner-pocket/cp-1.png"/>
-                            <img src="images/corner-pocket/cp-2.png"/>
-                            <img src="images/corner-pocket/cp-3.png"/>
-                            <img src="images/corner-pocket/cp-4.png"/>
-                            <img src="images/corner-pocket/cp-5.png"/>
-                            <img src="images/corner-pocket/cp-6.png"/>
-                            <img src="images/corner-pocket/cp-7.png"/>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row-container">
-                    <img src="images/ETDC/Brutalist.svg"/>
-                    <img src="images/ETDC/Brutalist.svg"/>
-                    <img src="images/ETDC/Brutalist.svg"/>
-                </div>
-
-                <img id="ETDC-logo" src="images/ETDC/logo.png"/>
-                <div id="project-2">
-                    <div class="row-container">
-                        <p>MOBILE GAME</p>
-                        <p>UNITY</p>
-                        <p>C#</p>
-                    </div>
-
-                    <p id="ETDC-text" class="small_text">A mobile adaptation of a popular board game developed using Unity and C#. This project focuses on translating physical game play mechanics into a digital format while maintaining an engaging user experience.</p>
-                    <button class="ETDC-button" onclick="window.open('ETDC-CS.pdf', '_blank')">VIEW CASE STUDY</button>
-
-                    <div id="ETDC-slide" class="logos">
-                        <div class="logos-slide">
-                            <img src="images/ETDC/ETDC-1.png"/>
-                            <img src="images/ETDC/ETDC-2.png"/>
-                            <img src="images/ETDC/ETDC-3.png"/>
-                            <img src="images/ETDC/ETDC-4.png"/>
-                            <img src="images/ETDC/ETDC-5.png"/>
-                            <img src="images/ETDC/ETDC-6.png"/>
-                            <img src="images/ETDC/ETDC-7.png"/>
-                        </div>
-                        <div class="logos-slide">
-                            <img src="images/ETDC/ETDC-1.png"/>
-                            <img src="images/ETDC/ETDC-2.png"/>
-                            <img src="images/ETDC/ETDC-3.png"/>
-                            <img src="images/ETDC/ETDC-4.png"/>
-                            <img src="images/ETDC/ETDC-5.png"/>
-                            <img src="images/ETDC/ETDC-6.png"/>
-                            <img src="images/ETDC/ETDC-7.png"/>
+                        <div class="logos-slide" aria-hidden="true">
+                            <img src="images/corner-pocket/cp-1.png" alt=""/>
+                            <img src="images/corner-pocket/cp-2.png" alt=""/>
+                            <img src="images/corner-pocket/cp-3.png" alt=""/>
+                            <img src="images/corner-pocket/cp-4.png" alt=""/>
+                            <img src="images/corner-pocket/cp-5.png" alt=""/>
+                            <img src="images/corner-pocket/cp-6.png" alt=""/>
+                            <img src="images/corner-pocket/cp-7.png" alt=""/>
                         </div>
                     </div>
-                </div>
-
-                
-
-                <div id="project-3">
-
-                    <img id="portfolio-logo" src="images/portfolio/portfolio-logo.svg"/>
-                    <div class="row-container" id="portfolio-skills">
-                        <p>FIGMA</p>
-                        <p>HTML</p>
-                        <p>CSS</p>
                     </div>
-
-                    <div id="portfolio-description">
-                        <p>Some of the alternative designs for this websites banner... not all winners but you can see the progression of the elements that led us here.</p>
-                    </div>
-
-                    <img src="images/portfolio/banner-1.png" id="main_n">
-                    <div id="thumbnails_n">
-                        <img src="images/portfolio/banner-1.png" alt="pic 1">
-                        <img src="images/portfolio/banner-4.png" alt="pic 2">
-                        <img src="images/portfolio/banner-2.png" alt="pic 3">
-                        <img src="images/portfolio/banner-3.png" alt="pic 4">
-                    </div>
-
-                </div>
+                </article>
             </div>
         </div>
     </section>
