@@ -218,7 +218,7 @@ nav a:hover, nav a.active {
   width: 70%;
   margin-top: -25%;
 }
-.designer-svg, .developer-svg {
+.developer-svg {
   width: 50vw;
   height: auto;
 }
@@ -230,6 +230,17 @@ nav a:hover, nav a.active {
   margin-top: 5%;
   display: flex;
   justify-content: flex-end;
+}
+.product-designer-heading {
+  display: inline-block;
+  padding: .08em .18em;
+  background-color: #C24AC9;
+  color: #fff;
+  font-family: bold;
+  font-size: clamp(20px, 5vw, 42px);
+  font-weight: normal;
+  line-height: 1;
+  white-space: nowrap;
 }
 .small_text {
   margin-top: 5%;
@@ -568,7 +579,8 @@ nav a:hover, nav a.active {
 
 /* REMOVE THIS AND HANDLE FONTS BETTER GLOBALLY */
 .styled-div p {
-  font-size: 18px;
+  font-size: 20px;
+  line-height: 1.55;
 }
 
 .developer-wide {
@@ -613,6 +625,12 @@ nav a:hover, nav a.active {
   margin-bottom: 10%;
 }
 
+.right-s .product-designer-heading {
+  max-width: 100%;
+  margin-bottom: 10%;
+  font-size: clamp(20px, 3.3vw, 42px);
+}
+
 .right-s {
   flex: 30%;
   text-align: right;
@@ -633,10 +651,16 @@ nav a:hover, nav a.active {
 }
 
 .column p {
-  font-size: 18px;
+  font-size: 20px;
+  line-height: 1.55;
   font-family: Akshar;
   font-weight: lighter;
   color: white;
+}
+
+#ABOUT .small_text {
+  font-size: 20px;
+  line-height: 1.65;
 }
 
 #wide-project-1 {
