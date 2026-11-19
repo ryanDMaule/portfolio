@@ -44,6 +44,99 @@ const projectConfigurations = Object.freeze({
     }),
 });
 
+const projectCardConfigurations = Object.freeze([
+    Object.freeze({
+        id: 'corner-pocket',
+        number: '01',
+        name: 'Corner Pocket',
+        description: 'A native Android app for tracking pool matches and analysing player performance.',
+        technologies: Object.freeze(['Kotlin', 'Android', 'Realm']),
+        accentColor: '#28E8C5',
+        selected: true,
+    }),
+    Object.freeze({
+        id: 'diurnus',
+        number: '02',
+        name: 'Diurnus',
+        description: 'A word-of-the-day app designed to make discovering remarkable language a daily ritual.',
+        technologies: Object.freeze(['Flutter', 'Dart', 'UX Design']),
+        accentColor: '#A56BE8',
+        selected: false,
+    }),
+    Object.freeze({
+        id: 'ever-after',
+        number: '03',
+        name: 'Ever After',
+        description: 'A personal audiobook gift app for creating meaningful, recorded stories.',
+        technologies: Object.freeze(['Flutter', 'Dart', 'Audio']),
+        accentColor: '#E7A1AC',
+        selected: false,
+    }),
+    Object.freeze({
+        id: 'enter-the-dungeon',
+        number: '04',
+        name: 'Enter the Dungeon',
+        description: 'A mobile dungeon crawler built in Unity with procedurally generated encounters.',
+        technologies: Object.freeze(['Unity', 'C#', 'Mobile']),
+        accentColor: '#D6AD59',
+        selected: false,
+    }),
+]);
+
+function createProjectSelectionCard(project, instance) {
+    const card = document.createElement('article');
+    card.className = 'project-selection-card';
+    card.dataset.projectId = project.id;
+    card.dataset.selected = String(project.selected);
+    card.style.setProperty('--card-accent', project.accentColor);
+    card.setAttribute('role', 'listitem');
+
+    const headingId = `project-card-${project.id}-${instance}`;
+    card.setAttribute('aria-labelledby', headingId);
+
+    const topRow = document.createElement('div');
+    topRow.className = 'project-selection-card__top';
+
+    const number = document.createElement('span');
+    number.className = 'project-selection-card__number';
+    number.textContent = project.number;
+
+    const indicator = document.createElement('span');
+    indicator.className = 'project-selection-card__indicator';
+    indicator.setAttribute('aria-hidden', 'true');
+    indicator.textContent = '↗';
+
+    topRow.append(number, indicator);
+
+    const name = document.createElement('h2');
+    name.id = headingId;
+    name.textContent = project.name;
+
+    const description = document.createElement('p');
+    description.className = 'project-selection-card__description';
+    description.textContent = project.description;
+
+    const divider = document.createElement('div');
+    divider.className = 'project-selection-card__divider';
+    divider.setAttribute('aria-hidden', 'true');
+
+    const technologies = document.createElement('ul');
+    technologies.className = 'project-selection-card__technologies';
+    project.technologies.forEach((technology) => {
+        const item = document.createElement('li');
+        item.textContent = technology;
+        technologies.appendChild(item);
+    });
+
+    card.append(topRow, name, description, divider, technologies);
+    return card;
+}
+
+document.querySelectorAll('[data-project-selection-grid]').forEach((grid, gridIndex) => {
+    grid.setAttribute('role', 'list');
+    grid.replaceChildren(...projectCardConfigurations.map((project) => createProjectSelectionCard(project, gridIndex)));
+});
+
 function createScreenshotSlide(screenshots, isDuplicate = false) {
     const slide = document.createElement('div');
     slide.className = 'logos-slide';
