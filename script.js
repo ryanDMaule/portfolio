@@ -42,6 +42,25 @@ const projectConfigurations = Object.freeze({
         globeGradient: Object.freeze({ start: '#28E8C5', end: '#C24AC9' }),
         accentColor: '#28E8C5',
     }),
+    escapeTheDarkCastle: Object.freeze({
+        id: 'escape-the-dark-castle',
+        name: 'Escape the Dark Castle',
+        logo: 'images/ETDC/logo.png',
+        description: 'A mobile adaptation of a popular board game developed using Unity and C#. This project focuses on translating physical game play mechanics into a digital format while maintaining an engaging user experience.',
+        screenshots: Object.freeze([
+            { src: 'images/ETDC/ETDC-1.png', caption: 'Escape the Dark Castle screenshot 1' },
+            { src: 'images/ETDC/ETDC-2.png', caption: 'Escape the Dark Castle screenshot 2' },
+            { src: 'images/ETDC/ETDC-3.png', caption: 'Escape the Dark Castle screenshot 3' },
+            { src: 'images/ETDC/ETDC-4.png', caption: 'Escape the Dark Castle screenshot 4' },
+            { src: 'images/ETDC/ETDC-5.png', caption: 'Escape the Dark Castle screenshot 5' },
+            { src: 'images/ETDC/ETDC-6.png', caption: 'Escape the Dark Castle screenshot 6' },
+            { src: 'images/ETDC/ETDC-7.png', caption: 'Escape the Dark Castle screenshot 7' },
+        ]),
+        technologies: Object.freeze(['MOBILE GAME', 'UNITY', 'C#']),
+        caseStudyUrl: 'ETDC-CS.pdf',
+        globeGradient: Object.freeze({ start: '#FFFFFF', end: '#AEB6C2' }),
+        accentColor: '#D8DDE3',
+    }),
 });
 
 const projectCardConfigurations = Object.freeze([
@@ -73,15 +92,17 @@ const projectCardConfigurations = Object.freeze([
         selected: false,
     }),
     Object.freeze({
-        id: 'enter-the-dungeon',
+        id: 'escape-the-dark-castle',
         number: '04',
-        name: 'Enter the Dungeon',
-        description: 'A mobile dungeon crawler built in Unity with procedurally generated encounters.',
-        technologies: Object.freeze(['Unity', 'C#', 'Mobile']),
-        accentColor: '#D6AD59',
+        name: 'Escape the Dark Castle',
+        description: 'A mobile adaptation of a popular board game developed using Unity and C#.',
+        technologies: Object.freeze(['Mobile Game', 'Unity', 'C#']),
+        accentColor: '#D8DDE3',
         selected: false,
     }),
 ]);
+
+const selectableProjectIds = new Set(['corner-pocket', 'escape-the-dark-castle']);
 
 function createProjectSelectionCard(project, instance) {
     const card = document.createElement('article');
@@ -129,6 +150,17 @@ function createProjectSelectionCard(project, instance) {
     });
 
     card.append(topRow, name, description, divider, technologies);
+
+    if (selectableProjectIds.has(project.id)) {
+        const action = document.createElement('button');
+        action.className = 'project-selection-card__action';
+        action.type = 'button';
+        action.setAttribute('aria-labelledby', headingId);
+        action.setAttribute('aria-pressed', String(project.selected));
+        action.dataset.projectSelection = project.id;
+        card.appendChild(action);
+    }
+
     return card;
 }
 
@@ -155,13 +187,37 @@ function createScreenshotSlide(screenshots, isDuplicate = false) {
     return slide;
 }
 
-function applyProjectConfiguration(project) {
+function updateGlobeGradient(showcase, gradient, shouldTransition) {
+    const layers = [...showcase.querySelectorAll('.project-globe-layer')];
+
+    if (!shouldTransition) {
+        layers.forEach((layer, index) => {
+            layer.style.setProperty('--globe-layer-start', gradient.start);
+            layer.style.setProperty('--globe-layer-end', gradient.end);
+            layer.classList.toggle('is-active', index === 0);
+        });
+        return;
+    }
+
+    const activeLayer = layers.find((layer) => layer.classList.contains('is-active')) || layers[0];
+    const nextLayer = layers.find((layer) => layer !== activeLayer);
+    nextLayer.style.setProperty('--globe-layer-start', gradient.start);
+    nextLayer.style.setProperty('--globe-layer-end', gradient.end);
+
+    requestAnimationFrame(() => {
+        activeLayer.classList.remove('is-active');
+        nextLayer.classList.add('is-active');
+    });
+}
+
+function applyProjectConfiguration(project, { transition = false } = {}) {
     document.querySelectorAll('[data-project-showcase]').forEach((showcase) => {
         showcase.dataset.projectId = project.id;
         showcase.setAttribute('aria-label', project.name);
         showcase.style.setProperty('--project-accent', project.accentColor);
         showcase.style.setProperty('--project-globe-start', project.globeGradient.start);
         showcase.style.setProperty('--project-globe-end', project.globeGradient.end);
+        updateGlobeGradient(showcase, project.globeGradient, transition);
 
         const logo = showcase.querySelector('[data-project-logo]');
         logo.src = project.logo;
@@ -189,6 +245,58 @@ function applyProjectConfiguration(project) {
 }
 
 applyProjectConfiguration(projectConfigurations.cornerPocket);
+
+const selectableProjects = Object.freeze({
+    'corner-pocket': projectConfigurations.cornerPocket,
+    'escape-the-dark-castle': projectConfigurations.escapeTheDarkCastle,
+});
+
+let projectGlobeRotation = 0;
+
+function getVisibleShowcase() {
+    return window.getComputedStyle(document.querySelector('.wide')).display === 'none'
+        ? document.querySelector('.narrow [data-project-showcase]')
+        : document.querySelector('.wide [data-project-showcase]');
+}
+
+function isShowcaseVisible() {
+    const showcase = getVisibleShowcase();
+    const bounds = showcase.getBoundingClientRect();
+    return bounds.top >= 0 && bounds.bottom <= window.innerHeight;
+}
+
+function selectProject(projectId) {
+    const project = selectableProjects[projectId];
+    if (!project) return;
+
+    const alreadySelected = document.querySelector(`.project-selection-card[data-project-id="${projectId}"][data-selected="true"]`);
+    if (alreadySelected) return;
+
+    applyProjectConfiguration(project, { transition: true });
+
+    projectGlobeRotation += 135;
+    document.querySelectorAll('[data-project-showcase]').forEach((showcase) => {
+        showcase.style.setProperty('--project-globe-rotation', `${projectGlobeRotation}deg`);
+    });
+
+    document.querySelectorAll('.project-selection-card').forEach((card) => {
+        const selected = card.dataset.projectId === projectId;
+        card.dataset.selected = String(selected);
+        const action = card.querySelector('.project-selection-card__action');
+        if (action) action.setAttribute('aria-pressed', String(selected));
+    });
+
+    if (!isShowcaseVisible()) {
+        getVisibleShowcase().scrollIntoView({
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+            block: 'start',
+        });
+    }
+}
+
+document.querySelectorAll('[data-project-selection]').forEach((action) => {
+    action.addEventListener('click', () => selectProject(action.dataset.projectSelection));
+});
 
 
 let sections = document.querySelectorAll('section');
