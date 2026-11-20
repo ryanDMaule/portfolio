@@ -299,22 +299,31 @@ document.querySelectorAll('[data-project-selection]').forEach((action) => {
 });
 
 
-let sections = document.querySelectorAll('section');
-let navLinks = document.querySelectorAll('header nav a');
+const sectionNavigationLinks = [...document.querySelectorAll('header nav a[data-section-link]')];
+const navigableSections = sectionNavigationLinks
+    .map((link) => document.querySelector(link.getAttribute('href')))
+    .filter(Boolean);
 
-window.onscroll = () => {
-    sections.forEach(sec => {
-        let top = window.scrollY;
-        let offset = sec.offsetTop - 150;
-        let height = sec.offsetHeight;
-        let id = sec.getAttribute('id');
-
-        if(top >= offset && top < offset + height) {
-            const activeLink = document.querySelector('header nav a[href*=' + id + ']');
-            if (!activeLink) return;
-
-            navLinks.forEach(link => link.classList.remove('active'));
-            activeLink.classList.add('active');
-        };
+function updateActiveNavigation() {
+    const headerHeight = document.querySelector('header')?.offsetHeight ?? 0;
+    const viewportMarker = window.scrollY + headerHeight + Math.min(window.innerHeight * .2, 160);
+    const activeSection = navigableSections.find((section) => {
+        const sectionTop = section.offsetTop;
+        return viewportMarker >= sectionTop && viewportMarker < sectionTop + section.offsetHeight;
     });
-};
+
+    sectionNavigationLinks.forEach((link) => {
+        const isActive = activeSection && link.getAttribute('href') === `#${activeSection.id}`;
+        link.classList.toggle('active', Boolean(isActive));
+
+        if (isActive) {
+            link.setAttribute('aria-current', 'location');
+        } else {
+            link.removeAttribute('aria-current');
+        }
+    });
+}
+
+window.addEventListener('scroll', updateActiveNavigation, { passive: true });
+window.addEventListener('hashchange', () => requestAnimationFrame(updateActiveNavigation));
+requestAnimationFrame(updateActiveNavigation);

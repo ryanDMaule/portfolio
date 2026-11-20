@@ -42,10 +42,11 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px;
+  height: 64px;
   padding-left: 10%;
   padding-right: 10%;
   background: black;
+  border-bottom: 1px solid rgba(255, 255, 255, .14);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -54,28 +55,101 @@ header {
 }
 
 .logo {
-  font-size: 25px;
-  color: white;
+  display: inline-flex;
+  width: 62px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   text-decoration: none;
-  font-weight: 600;
 }
 
-nav a {
-  font-size: 18px;
-  color: white;
-  text-decoration: none;
-  margin-left: 35px;
-  transition: .3s;
+.logo img {
+  display: block;
+  width: auto;
+  height: 76px;
+  flex: 0 0 auto;
 }
 
-nav a:hover, nav a.active {
+.logo:focus-visible,
+.primary-navigation a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 5px;
+}
+
+.primary-navigation {
+  display: flex;
+  align-items: center;
+  gap: clamp(22px, 2.5vw, 42px);
+}
+
+.primary-navigation a {
+  position: relative;
+  display: inline-flex;
+  gap: .42em;
+  align-items: center;
+  margin-left: 0;
+  padding: 7px 0 6px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: .035em;
+  color: white;
+  text-decoration: none;
+}
+
+.primary-navigation a[data-section-link]::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: #28e8c5;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+
+.primary-navigation a[data-section-link]:hover::after,
+.primary-navigation a[data-section-link]:focus-visible::after,
+.primary-navigation a[data-section-link].active::after {
+  transform: scaleX(1);
+}
+
+.nav-number {
+  color: rgba(255, 255, 255, .52);
+}
+
+.primary-navigation a:hover .nav-number,
+.primary-navigation a:focus-visible .nav-number,
+.primary-navigation a.active .nav-number {
   color: #28e8c5;
 }
 
 #CV {
-  padding: 4px 20px;
-  border: 2px solid #28e8c5; /* Set the border */
-  border-radius: 10px;    /* Rounds the corners */
+  margin-left: 3px;
+  width: 92px;
+  height: 38px;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 14px;
+  border: 1px solid #28e8c5;
+  border-radius: 0;
+  background: #28e8c5;
+  color: #050505;
+  font-weight: 700;
+}
+
+#CV:hover,
+#CV:focus-visible {
+  border-color: #6fffe4;
+  background: #6fffe4;
+  color: #050505;
+}
+
+.cv-arrow {
+  font-size: 15px;
+  line-height: 1;
 }
 
 #HERO {
@@ -103,7 +177,7 @@ nav a:hover, nav a.active {
 .hero-artwork {
   position: absolute;
   z-index: 0;
-  top: 80px;
+  top: 64px;
   bottom: 0;
   left: 50%;
   width: 60vw;
@@ -240,11 +314,15 @@ nav a:hover, nav a.active {
 @media (max-width: 900px) {
   header {
     height: auto;
-    min-height: 76px;
-    padding: 14px 22px;
+    min-height: 64px;
+    padding: 10px 22px;
   }
 
-  header nav a:not(#CV) {
+  .primary-navigation {
+    gap: 0;
+  }
+
+  .primary-navigation a:not(#CV) {
     display: none;
   }
 
@@ -272,7 +350,7 @@ nav a:hover, nav a.active {
   }
 
   .hero-artwork {
-    top: 76px;
+    top: 64px;
     width: 100%;
     -webkit-mask-image: none;
     mask-image: none;

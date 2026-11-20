@@ -10,14 +10,28 @@
 </head>
 
 <body>
-    <header>
-            <a href="#" class="logo">R.Maule</a>
+    <header class="site-header">
+            <a href="#HERO" class="logo" aria-label="Ryan Maule — Home">
+                <img src="images/rm-logo.svg" alt="" width="163" height="200">
+            </a>
 
-            <nav>
-                <a href="#ABOUT" class="active">ABOUT</a>
-                <a href="#PROJECTS">PROJECTS</a>
-                <a href="#CONTACT">CONTACT</a>
-                <a href="#resume" onclick="window.open('CV.pdf', '_blank')" id="CV">CV</a>
+            <nav class="primary-navigation" aria-label="Primary navigation">
+                <a href="#ABOUT" data-section-link>
+                    <span class="nav-number">01 /</span>
+                    <span class="nav-label">ABOUT</span>
+                </a>
+                <a href="#PROJECTS" data-section-link>
+                    <span class="nav-number">02 /</span>
+                    <span class="nav-label">PROJECTS</span>
+                </a>
+                <a href="#CONTACT" data-section-link>
+                    <span class="nav-number">03 /</span>
+                    <span class="nav-label">CONTACT</span>
+                </a>
+                <a href="#resume" onclick="window.open('CV.pdf', '_blank')" id="CV">
+                    <span>CV</span>
+                    <span class="cv-arrow" aria-hidden="true">↗</span>
+                </a>
             </nav>
     </header>
 
