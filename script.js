@@ -310,10 +310,11 @@ window.onscroll = () => {
         let id = sec.getAttribute('id');
 
         if(top >= offset && top < offset + height) {
-            navLinks.forEach(links => {
-                links.classList.remove('active');
-                document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
-            });
+            const activeLink = document.querySelector('header nav a[href*=' + id + ']');
+            if (!activeLink) return;
+
+            navLinks.forEach(link => link.classList.remove('active'));
+            activeLink.classList.add('active');
         };
     });
 };

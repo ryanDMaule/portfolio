@@ -21,20 +21,20 @@
             </nav>
     </header>
 
-    <section id="HERO">
+    <section id="HERO" aria-labelledby="hero-name">
+        <picture class="hero-artwork" aria-hidden="true">
+            <source srcset="images/hero/hero-composite.webp" type="image/webp">
+            <img src="images/hero/hero-composite-source.png" alt="">
+        </picture>
 
-        <div class="split left">
-            <h1>RYAN</h1>
-            <h1>RYAN</h1>
-            <h1>RYAN</h1>
-        </div>
-        
-        <div class="split right">
-            <h1>MAULE</h1>
-            <h1>MAULE</h1>
-            <h1>MAULE</h1>
-        </div>
+        <p class="hero-role"><span></span>SOFTWARE DEVELOPER /<br>PRODUCT DESIGNER</p>
 
+        <h1 id="hero-name" class="hero-name">
+            <span class="hero-name__first">RYAN</span>
+            <span class="hero-name__last">MAULE</span>
+        </h1>
+
+        <a class="hero-cta" href="#PROJECTS">VIEW PROJECTS <span aria-hidden="true">↗</span></a>
     </section>
 
     <div class="marquee-text">
@@ -305,12 +305,12 @@
         </footer>
     </section>
 
-    <div class="marquee-text" id="footer-text">
+    <div class="marquee-text footer-text">
         <div class="marquee-text-track" id="footer-track">
-            <p id="footer-text">HAVE A GREAT DAY AND TOMORROW AS WELL</p>
-            <p id="footer-text" aria-hidden="true">HAVE A GREAT DAY AND TOMORROW AS WELL</p>
-            <p id="footer-text" aria-hidden="true">HAVE A GREAT DAY AND TOMORROW AS WELL</p>
-            <p id="footer-text" aria-hidden="true">HAVE A GREAT DAY AND TOMORROW AS WELL</p>
+            <p>HAVE A GREAT DAY AND TOMORROW AS WELL</p>
+            <p aria-hidden="true">HAVE A GREAT DAY AND TOMORROW AS WELL</p>
+            <p aria-hidden="true">HAVE A GREAT DAY AND TOMORROW AS WELL</p>
+            <p aria-hidden="true">HAVE A GREAT DAY AND TOMORROW AS WELL</p>
         </div>
     </div>
 
