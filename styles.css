@@ -1050,12 +1050,20 @@ header {
   padding-bottom: 2vi;
 }
 .footer-text {
-  font-size: 5vw;
+  border-color: #000;
+  background-color: #fff;
+}
+.footer-text p {
+  color: #000;
+  font-size: clamp(28px, 4.4vw, 64px);
+  font-weight: 700;
+  padding-top: clamp(28px, 4vw, 60px);
+  padding-bottom: clamp(28px, 4vw, 60px);
 }
 #footer-track {
-  color: #fff;
-  padding-top: 2vi;
-  padding-bottom: 2vi;
+  align-items: center;
+  padding-top: 0;
+  padding-bottom: 0;
   animation: 10s linear infinite marquee-anim;
 }
 
