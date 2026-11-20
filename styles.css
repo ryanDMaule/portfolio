@@ -438,6 +438,158 @@ header {
   }
 }
 
+.hero-personality {
+  display: none;
+}
+
+@media (min-width: 901px) {
+  #HERO.stage-two-enabled .hero-personality {
+    position: absolute;
+    z-index: 9;
+    inset: 0;
+    display: block;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .annotation-arrow {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .annotation-arrow path {
+    fill: none;
+    stroke: rgba(255, 255, 255, .9);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .annotation-arrow__shaft {
+    stroke-width: 1.6;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: stage-two-arrow-draw .48s ease-out 3.7s both;
+  }
+
+  .annotation-arrow__head {
+    stroke-width: 1.6;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: stage-two-arrow-draw .18s ease-out 4.05s both;
+  }
+
+  .hero-annotation {
+    position: absolute;
+    top: 13.5%;
+    right: 3.5%;
+    width: min(42vw, 440px);
+    color: rgba(255, 255, 255, .94);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: clamp(15px, 1.1vw, 19px);
+    line-height: 1.55;
+    letter-spacing: .01em;
+    opacity: 0;
+    text-shadow: 0 1px 8px #000, 0 0 2px #000;
+  }
+
+  .hero-annotation.is-visible {
+    opacity: 1;
+  }
+
+  .hero-annotation__line {
+    display: block;
+    min-height: 1.55em;
+    white-space: nowrap;
+  }
+
+  .hero-annotation__cursor {
+    display: none;
+    width: 1px;
+    height: 1.05em;
+    margin-left: 2px;
+    background: rgba(255, 255, 255, .9);
+    vertical-align: -.14em;
+  }
+
+  .hero-annotation__cursor.is-typing {
+    display: inline-block;
+    animation: stage-two-cursor-blink .7s steps(1, end) infinite;
+  }
+
+  .hero-googly-eyes {
+    position: absolute;
+    inset: 0;
+  }
+
+  .googly-eye {
+    position: absolute;
+    top: var(--eye-y, 0px);
+    left: var(--eye-x, 0px);
+    display: grid;
+    width: var(--eye-size, 30px);
+    height: var(--eye-size, 30px);
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, .28);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff 0 42%, #e6e6e6 72%, #bdbdbd 100%);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .48), inset -1px -2px 3px rgba(0, 0, 0, .16);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  .googly-eye--right {
+    width: calc(var(--eye-size, 30px) * .94);
+    height: calc(var(--eye-size, 30px) * .94);
+  }
+
+  .hero-googly-eyes.is-visible .googly-eye--left {
+    animation: stage-two-eye-pop .4s cubic-bezier(.2, .9, .3, 1.35) both;
+  }
+
+  .hero-googly-eyes.is-visible .googly-eye--right {
+    animation: stage-two-eye-pop .4s cubic-bezier(.2, .9, .3, 1.35) .06s both;
+  }
+
+  .googly-eye__pupil {
+    width: 56%;
+    height: 56%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #3b3b3b 0 12%, #050505 58%, #000 100%);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+  }
+}
+
+@keyframes stage-two-arrow-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes stage-two-cursor-blink {
+  0%, 48% { opacity: 1; }
+  49%, 100% { opacity: 0; }
+}
+
+@keyframes stage-two-eye-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(-8deg);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1) rotate(3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0);
+  }
+}
+
 @media (max-width: 900px) {
   header {
     height: auto;
@@ -1506,6 +1658,31 @@ header {
   .hero-cta,
   .hero-cta::after {
     animation: none;
+  }
+
+  .annotation-arrow__shaft,
+  .annotation-arrow__head,
+  .hero-googly-eyes.is-visible .googly-eye {
+    animation: none;
+  }
+
+  .annotation-arrow__shaft,
+  .annotation-arrow__head {
+    stroke-dashoffset: 0;
+  }
+
+  .hero-annotation {
+    opacity: 1;
+  }
+
+  .hero-annotation__cursor {
+    display: none;
+    animation: none;
+  }
+
+  .hero-googly-eyes.is-visible .googly-eye {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
 
   .hidden {

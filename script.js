@@ -327,3 +327,204 @@ function updateActiveNavigation() {
 window.addEventListener('scroll', updateActiveNavigation, { passive: true });
 window.addEventListener('hashchange', () => requestAnimationFrame(updateActiveNavigation));
 requestAnimationFrame(updateActiveNavigation);
+
+(() => {
+    const hero = document.querySelector('#HERO');
+    const artworkImage = document.querySelector('.hero-artwork img');
+    const personality = document.querySelector('.hero-personality');
+    const annotation = document.querySelector('.hero-annotation');
+    const annotationLineOne = document.querySelector('[data-annotation-line-one]');
+    const annotationLineTwo = document.querySelector('[data-annotation-line-two]');
+    const cursorOne = document.querySelector('[data-annotation-cursor-one]');
+    const cursorTwo = document.querySelector('[data-annotation-cursor-two]');
+    const annotationArrow = document.querySelector('.annotation-arrow');
+    const arrowShaft = document.querySelector('.annotation-arrow__shaft');
+    const arrowHead = document.querySelector('.annotation-arrow__head');
+    const eyesContainer = document.querySelector('.hero-googly-eyes');
+    const eyes = [...document.querySelectorAll('.googly-eye')];
+    const pupils = [...document.querySelectorAll('.googly-eye__pupil')];
+
+    if (!hero || !artworkImage || !personality || !annotation || !annotationArrow || !arrowShaft || !arrowHead
+        || !annotationLineOne || !annotationLineTwo || !cursorOne || !cursorTwo || !eyesContainer
+        || eyes.length !== 2 || pupils.length !== 2) return;
+    if (!window.matchMedia('(min-width: 901px)').matches) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const pointerTrackingAvailable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const sourceEyePositions = [
+        { x: 789, y: 339 },
+        { x: 929, y: 326 },
+    ];
+    const pupilStates = pupils.map((element) => ({
+        element,
+        centerX: 0,
+        centerY: 0,
+        currentX: 0,
+        currentY: 0,
+        targetX: 0,
+        targetY: 0,
+        maxTravel: 6,
+    }));
+    let pupilFrame = null;
+    let resizeFrame = null;
+    let eyesAreVisible = false;
+
+    function positionPersonalityElements() {
+        const heroBounds = hero.getBoundingClientRect();
+        const imageBounds = artworkImage.getBoundingClientRect();
+        const naturalWidth = artworkImage.naturalWidth || 1671;
+        const naturalHeight = artworkImage.naturalHeight || 941;
+        const scaleX = imageBounds.width / naturalWidth;
+        const scaleY = imageBounds.height / naturalHeight;
+        const eyeSize = Math.max(39, Math.min(64, 81 * Math.min(scaleX, scaleY)));
+
+        annotationArrow.setAttribute('viewBox', `0 0 ${heroBounds.width} ${heroBounds.height}`);
+
+        sourceEyePositions.forEach((position, index) => {
+            const x = imageBounds.left - heroBounds.left + position.x * scaleX;
+            const y = imageBounds.top - heroBounds.top + position.y * scaleY;
+            const size = index === 0 ? eyeSize : eyeSize * .94;
+            const eye = eyes[index];
+            const state = pupilStates[index];
+
+            eye.style.setProperty('--eye-x', `${x}px`);
+            eye.style.setProperty('--eye-y', `${y}px`);
+            eye.style.setProperty('--eye-size', `${eyeSize}px`);
+
+            state.centerX = x + heroBounds.left;
+            state.centerY = y + heroBounds.top;
+            state.maxTravel = Math.max(6, Math.min(9, size * .18));
+        });
+
+        const annotationBounds = annotation.getBoundingClientRect();
+        const startX = annotationBounds.left - heroBounds.left + 8;
+        const startY = annotationBounds.top - heroBounds.top + annotationBounds.height + 12;
+        const endX = (pupilStates[0].centerX + pupilStates[1].centerX) / 2 - heroBounds.left + 8;
+        const endY = (pupilStates[0].centerY + pupilStates[1].centerY) / 2 - heroBounds.top - eyeSize * 1.8;
+        const controlOneX = startX - Math.max(45, (startX - endX) * .3);
+        const controlOneY = startY + 10;
+        const controlTwoX = endX + Math.max(55, (startX - endX) * .28);
+        const controlTwoY = endY - 24;
+
+        arrowShaft.setAttribute('d', `M ${startX} ${startY} C ${controlOneX} ${controlOneY}, ${controlTwoX} ${controlTwoY}, ${endX} ${endY}`);
+
+        const tangentX = endX - controlTwoX;
+        const tangentY = endY - controlTwoY;
+        const tangentLength = Math.hypot(tangentX, tangentY) || 1;
+        const unitX = tangentX / tangentLength;
+        const unitY = tangentY / tangentLength;
+        const perpendicularX = -unitY;
+        const perpendicularY = unitX;
+        const arrowLength = 12;
+        const arrowWidth = 5;
+        const pointOneX = endX - unitX * arrowLength + perpendicularX * arrowWidth;
+        const pointOneY = endY - unitY * arrowLength + perpendicularY * arrowWidth;
+        const pointTwoX = endX - unitX * arrowLength - perpendicularX * arrowWidth;
+        const pointTwoY = endY - unitY * arrowLength - perpendicularY * arrowWidth;
+        arrowHead.setAttribute('d', `M ${pointOneX} ${pointOneY} L ${endX} ${endY} L ${pointTwoX} ${pointTwoY}`);
+    }
+
+    function schedulePositionUpdate() {
+        if (resizeFrame !== null) return;
+        resizeFrame = requestAnimationFrame(() => {
+            resizeFrame = null;
+            positionPersonalityElements();
+        });
+    }
+
+    function schedulePupilFrame() {
+        if (pupilFrame !== null) return;
+        pupilFrame = requestAnimationFrame(animatePupils);
+    }
+
+    function animatePupils() {
+        let stillMoving = false;
+
+        pupilStates.forEach((state) => {
+            state.currentX += (state.targetX - state.currentX) * .16;
+            state.currentY += (state.targetY - state.currentY) * .16;
+            state.element.style.transform = `translate3d(${state.currentX}px, ${state.currentY}px, 0)`;
+
+            if (Math.abs(state.targetX - state.currentX) > .05 || Math.abs(state.targetY - state.currentY) > .05) {
+                stillMoving = true;
+            }
+        });
+
+        pupilFrame = stillMoving ? requestAnimationFrame(animatePupils) : null;
+    }
+
+    function updatePupilTargets(event) {
+        if (!eyesAreVisible) return;
+
+        pupilStates.forEach((state) => {
+            const deltaX = event.clientX - state.centerX;
+            const deltaY = event.clientY - state.centerY;
+            const distance = Math.hypot(deltaX, deltaY) || 1;
+            const travel = Math.min(state.maxTravel, distance / 45);
+            state.targetX = deltaX / distance * travel;
+            state.targetY = deltaY / distance * travel;
+        });
+
+        schedulePupilFrame();
+    }
+
+    function centrePupils() {
+        pupilStates.forEach((state) => {
+            state.targetX = 0;
+            state.targetY = 0;
+        });
+        schedulePupilFrame();
+    }
+
+    const wait = (duration) => new Promise((resolve) => window.setTimeout(resolve, duration));
+
+    async function typeSentence(target, cursor, sentence) {
+        cursor.classList.add('is-typing');
+        for (const character of sentence) {
+            target.textContent += character;
+            await wait(40);
+        }
+        cursor.classList.remove('is-typing');
+    }
+
+    async function runStageTwo() {
+        await wait(4200);
+        annotation.classList.add('is-visible');
+        await typeSentence(annotationLineOne, cursorOne, "This is me... it's a little pretentious.");
+        await wait(500);
+
+        eyesContainer.classList.add('is-visible');
+        eyesAreVisible = true;
+        await wait(800);
+
+        await typeSentence(annotationLineTwo, cursorTwo, "That's better.");
+        cursorTwo.classList.add('is-typing');
+        await wait(700);
+        cursorTwo.classList.remove('is-typing');
+    }
+
+    hero.classList.add('stage-two-enabled');
+
+    if (artworkImage.complete) {
+        positionPersonalityElements();
+    } else {
+        artworkImage.addEventListener('load', positionPersonalityElements, { once: true });
+    }
+
+    window.addEventListener('resize', schedulePositionUpdate, { passive: true });
+
+    if (reducedMotion) {
+        annotationLineOne.textContent = "This is me... it's a little pretentious.";
+        annotationLineTwo.textContent = "That's better.";
+        annotation.classList.add('is-visible');
+        eyesContainer.classList.add('is-visible');
+        return;
+    }
+
+    if (pointerTrackingAvailable) {
+        hero.addEventListener('mousemove', updatePupilTargets, { passive: true });
+        hero.addEventListener('mouseleave', centrePupils, { passive: true });
+    }
+
+    runStageTwo();
+})();
